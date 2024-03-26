@@ -83,8 +83,7 @@ namespace ElasticCassandraExample.Dal.Repositories
                     .Bool(bo => bo
                         .Must(mus => mus.Match(m => m.Field(f => f.LicensePlate).Query(value)))))
                 .Scroll("1m"));
-
-
+            
             List<Passage> results = new List<Passage>();
 
             if (result.Documents.Any())
@@ -108,8 +107,7 @@ namespace ElasticCassandraExample.Dal.Repositories
             }
 
             _elasticClient.ClearScroll(new ClearScrollRequest(scrollid));
-
-
+            
             return results.ToList();
         }
 
@@ -160,12 +158,9 @@ namespace ElasticCassandraExample.Dal.Repositories
         {
 
             var listChunck = passages.Chunk(5000).ToList();
-
-
+            
             foreach (var item in listChunck)
             {
-
-
                 var waitHandle = new CountdownEvent(1);
 
                 var bulkAll = _elasticClient.BulkAll(item, b => b
@@ -184,7 +179,6 @@ namespace ElasticCassandraExample.Dal.Repositories
                 ));
 
                 waitHandle.Wait();
-
 
                 //var descriptor = new BulkDescriptor();
 
@@ -228,11 +222,11 @@ namespace ElasticCassandraExample.Dal.Repositories
                                     .GreaterThanOrEquals(startDate.ToString("yyyy-MM-ddTHH:mm:ss"))
                                     .LessThanOrEquals(endDate.ToString("yyyy-MM-ddTHH:mm:ss"))
                                 ),
-                            //mu => mu
-                            //    .Match(m => m
-                            //        .Field(f => f.CodeEquipment)
-                            //        .Query(codeEquipment)
-                            //    ),
+                            mu => mu
+                                .Match(m => m
+                                    .Field(f => f.CodeLane)
+                                    .Query("SE001R")
+                                ),
                             mu => mu
                                 .Match(m => m
                                     .Field(f => f.IdMonth)
@@ -241,8 +235,8 @@ namespace ElasticCassandraExample.Dal.Repositories
                         )
                     )
                 )
-                .Size(100)
-                .Scroll("1m"));
+                .Size(50)
+                .Scroll("24h"));
 
             return result;
              
