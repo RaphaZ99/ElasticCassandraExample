@@ -85,10 +85,10 @@ namespace ElasticCassandraExample.Controllers
             return Ok(await _passageService.GetByDateMonthEquipmentCode(filterDto.StartDate, filterDto.EndDate, filterDto.IdMonth, filterDto.CodeEquipment));
         }
 
-        [HttpPost("filter/{paginationScroolId}")]
-        public async Task<IActionResult> GetBySearchByPaginationScrool(string paginationScroolId)
+        [HttpPost("filter/{paginationScrollId}")]
+        public async Task<IActionResult> GetBySearchByPaginationScroll(string paginationScrollId)
         {
-            return Ok(await _passageService.GetSearchByScroolId("1h", paginationScroolId));
+            return Ok(await _passageService.GetSearchByScrollId("1h", paginationScrollId));
         }
     }
 }

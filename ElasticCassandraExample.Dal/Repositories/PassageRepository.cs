@@ -224,8 +224,8 @@ namespace ElasticCassandraExample.Dal.Repositories
                                 ),
                             mu => mu
                                 .Match(m => m
-                                    .Field(f => f.CodeLane)
-                                    .Query("SE001R")
+                                    .Field(f => f.CodeEquipment)
+                                    .Query(codeEquipment)
                                 ),
                             mu => mu
                                 .Match(m => m
@@ -242,9 +242,9 @@ namespace ElasticCassandraExample.Dal.Repositories
              
         }
 
-        public async Task<ISearchResponse<Passage>> GetSearchByScroolId(string scrollTime, string PaginationScroolId)
+        public async Task<ISearchResponse<Passage>> GetSearchByScrollId(string scrollTime, string PaginationScrollId)
         {
-            var response = await _elasticClient.ScrollAsync<Passage>(scrollTime, PaginationScroolId);
+            var response = await _elasticClient.ScrollAsync<Passage>(scrollTime, PaginationScrollId);
 
             if (!response.IsValid)
             {

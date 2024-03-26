@@ -63,9 +63,9 @@ namespace ElasticCassandraExample.Application.Services
             return await _passageRepository.DeleteAllDocumentsAsync(indexName);
         }
 
-        public async Task<FilterResponseDTO<Passage>> GetSearchByScroolId(string scrollTime, string PaginationScroolId)
+        public async Task<FilterResponseDTO<Passage>> GetSearchByScrollId(string scrollTime, string PaginationScrollId)
         {
-            var result = await _passageRepository.GetSearchByScroolId(scrollTime, PaginationScroolId);
+            var result = await _passageRepository.GetSearchByScrollId(scrollTime, PaginationScrollId);
 
             return new FilterResponseDTO<Passage>
             {

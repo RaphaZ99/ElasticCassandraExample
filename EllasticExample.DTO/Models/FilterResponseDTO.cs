@@ -4,6 +4,5 @@
     {
         public string PaginationScroolId { get; set; }
         public List<T> Items { get; set; }
-     
     }
 }

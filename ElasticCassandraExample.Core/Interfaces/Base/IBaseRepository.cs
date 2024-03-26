@@ -13,7 +13,7 @@ namespace ElasticCassandraExample.Domain.Interfaces.Base
         Task<List<T>> GetAllAsync();
         Task<T> DeleteAsync();
 
-        Task<ISearchResponse<T>> GetSearchByScroolId(string scrollTime,string PaginationScroolId);
+        Task<ISearchResponse<T>> GetSearchByScrollId(string scrollTime,string PaginationScroolId);
 
     }
 }

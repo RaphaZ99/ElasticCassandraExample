@@ -12,6 +12,6 @@ namespace ElasticCassandraExample.Application.Base
 
         Task<bool> DeleteAllDocumentsByIndexNameAsync(string indexName);
 
-        Task<FilterResponseDTO<T>> GetSearchByScroolId(string scrollTime, string PaginationScroolId);
+        Task<FilterResponseDTO<T>> GetSearchByScrollId(string scrollTime, string PaginationScroolId);
     }
 }
