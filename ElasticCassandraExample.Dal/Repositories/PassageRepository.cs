@@ -83,7 +83,7 @@ namespace ElasticCassandraExample.Dal.Repositories
                     .Bool(bo => bo
                         .Must(mus => mus.Match(m => m.Field(f => f.LicensePlate).Query(value)))))
                 .Scroll("1m"));
-            
+
             List<Passage> results = new List<Passage>();
 
             if (result.Documents.Any())
@@ -107,7 +107,7 @@ namespace ElasticCassandraExample.Dal.Repositories
             }
 
             _elasticClient.ClearScroll(new ClearScrollRequest(scrollid));
-            
+
             return results.ToList();
         }
 
@@ -158,7 +158,7 @@ namespace ElasticCassandraExample.Dal.Repositories
         {
 
             var listChunck = passages.Chunk(5000).ToList();
-            
+
             foreach (var item in listChunck)
             {
                 var waitHandle = new CountdownEvent(1);
@@ -179,18 +179,6 @@ namespace ElasticCassandraExample.Dal.Repositories
                 ));
 
                 waitHandle.Wait();
-
-                //var descriptor = new BulkDescriptor();
-
-                //descriptor.UpdateMany<Passage>(item, (b, u) => b
-                //    .Index("passage")
-                //    .Doc(u)
-                //    .DocAsUpsert());
-
-                //var insert = await _elasticClient.BulkAsync(descriptor);
-
-                //if (!insert.IsValid)
-                //    throw new Exception(insert.OriginalException.ToString());
             }
 
             return true;
@@ -210,7 +198,7 @@ namespace ElasticCassandraExample.Dal.Repositories
             return true;
         }
 
-        public async Task<ISearchResponse<Passage>> GetByDateMonthEquipmentCode(DateTime startDate, DateTime endDate, int idMonth, string codeEquipment)
+        public async Task<ISearchResponse<Passage>> GetByDateMonthEquipmentCode(DateTime startDate, DateTime endDate, List<int> idMonths, string codeEquipment)
         {
             var result = await _elasticClient.SearchAsync<Passage>(s => s
                 .Index("passage")
@@ -226,20 +214,22 @@ namespace ElasticCassandraExample.Dal.Repositories
                                 .Match(m => m
                                     .Field(f => f.CodeEquipment)
                                     .Query(codeEquipment)
-                                ),
-                            mu => mu
-                                .Match(m => m
-                                    .Field(f => f.IdMonth)
-                                    .Query(idMonth.ToString())
-                                )
+                            ),
+                        mu => mu
+                            .Terms(m => m
+                                .Field(f => f.IdMonth)
+                                .Terms(idMonths)
+                            )
                         )
                     )
                 )
+                .Sort(sort => sort
+                    .Ascending(f => f.DateTimePassage))
                 .Size(50)
                 .Scroll("24h"));
 
             return result;
-             
+
         }
 
         public async Task<ISearchResponse<Passage>> GetSearchByScrollId(string scrollTime, string PaginationScrollId)

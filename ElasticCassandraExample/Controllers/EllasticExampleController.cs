@@ -79,7 +79,7 @@ namespace ElasticCassandraExample.Controllers
         [HttpPost("filter")]
         public async Task<IActionResult> GetByDateMonthEquipmentCode([FromBody] FilterDTO filterDto)
         {
-            return Ok(await _passageService.GetByDateMonthEquipmentCode(filterDto.StartDate, filterDto.EndDate, filterDto.IdMonth, filterDto.CodeEquipment));
+            return Ok(await _passageService.GetByDateMonthEquipmentCode(filterDto.StartDate, filterDto.EndDate, filterDto.IdMonths, filterDto.CodeEquipment));
         }
 
         [HttpPost("filter/{paginationScrollId}")]

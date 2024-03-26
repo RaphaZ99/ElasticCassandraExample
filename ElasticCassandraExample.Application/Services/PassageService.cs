@@ -42,9 +42,9 @@ namespace ElasticCassandraExample.Application.Services
             return await _passageRepository.GetPassagesByLicensePlateAsync(value);
         }
 
-        public async Task<FilterResponseDTO<Passage>> GetByDateMonthEquipmentCode(DateTime startDate, DateTime endDate, int idMonth, string codeEquipment)
+        public async Task<FilterResponseDTO<Passage>> GetByDateMonthEquipmentCode(DateTime startDate, DateTime endDate, List<int> idMonths, string codeEquipment)
         {
-            var result = await _passageRepository.GetByDateMonthEquipmentCode(startDate, endDate, idMonth, codeEquipment);
+            var result = await _passageRepository.GetByDateMonthEquipmentCode(startDate, endDate, idMonths, codeEquipment);
 
             return new FilterResponseDTO<Passage>
             {

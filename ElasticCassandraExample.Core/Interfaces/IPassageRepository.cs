@@ -14,6 +14,6 @@ namespace ElasticCassandraExample.Core.Interfaces
 
         Task<bool> DeleteAllDocumentsAsync(string indexName);
 
-        Task<ISearchResponse<Passage>> GetByDateMonthEquipmentCode(DateTime startDate, DateTime endDate, int idMonth, string codeEquipment);
+        Task<ISearchResponse<Passage>> GetByDateMonthEquipmentCode(DateTime startDate, DateTime endDate, List<int> idMonths, string codeEquipment);
     }
 }

@@ -7,9 +7,9 @@ namespace ElasticCassandraExample.Application.Interfaces
 {
     public interface IPassageService : IBaseService<Passage>
     {
-         
+
         Task<List<Passage>> GetPassagesByLicensePlateAsync(string value);
-           
-        Task<FilterResponseDTO<Passage>> GetByDateMonthEquipmentCode(DateTime startDate, DateTime endDate, int idMonth, string codeEquipment);
+
+        Task<FilterResponseDTO<Passage>> GetByDateMonthEquipmentCode(DateTime startDate, DateTime endDate, List<int> idMonths, string codeEquipment);
     }
 }
