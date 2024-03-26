@@ -61,10 +61,7 @@ namespace ElasticCassandraExample.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllPassages()
         {
-
-            var passages = await _passageService.GetAllAsync();
-
-            return Ok(passages);
+             return Ok(await _passageService.GetAllAsync());
         }
 
         [HttpGet("{licensePlate}")]
