@@ -19,7 +19,6 @@ namespace ElasticCassandraExample.ElasticSearch.Extension
                 settings = settings.BasicAuthentication(basictAuthUser, basictAuthPassword);
 
             settings.EnableApiVersioningHeader();
-            AddDefaultMappings(settings);
 
             var client = new ElasticClient(settings);
 
@@ -31,9 +30,6 @@ namespace ElasticCassandraExample.ElasticSearch.Extension
         private static void CreateIndex(IElasticClient client, string indexName) {
             var createIndexResponse = client.Indices.Create(indexName, index => index.Map <Passage> (x => x.AutoMap()));
         }
-
-        private static void AddDefaultMappings(ConnectionSettings settings) {
-            settings.DefaultMappingFor <Passage> (m => m.Ignore(p => p.CodeEquipment));
-        }
+ 
     }
 }

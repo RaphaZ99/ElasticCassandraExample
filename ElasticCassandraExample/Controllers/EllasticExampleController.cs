@@ -86,7 +86,7 @@ namespace ElasticCassandraExample.Controllers
         }
 
         [HttpPost("filter/{paginationScroolId}")]
-        public async Task<IActionResult> GetByDateMonthEquipmentCode(string paginationScroolId)
+        public async Task<IActionResult> GetBySearchByPaginationScrool(string paginationScroolId)
         {
             return Ok(await _passageService.GetSearchByScroolId("1h", paginationScroolId));
         }
