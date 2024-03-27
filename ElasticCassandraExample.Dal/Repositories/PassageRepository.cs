@@ -200,7 +200,7 @@ namespace ElasticCassandraExample.Dal.Repositories
 
         public async Task<ISearchResponse<Passage>> GetByDateMonthEquipmentCode(DateTime startDate, DateTime endDate, List<int> idMonths, string codeEquipment)
         {
-            var result = await _elasticClient.SearchAsync<Passage>(s => s
+            var response = await _elasticClient.SearchAsync<Passage>(s => s
                 .Index("passage")
                 .Query(q => q
                     .Bool(b => b
@@ -224,11 +224,17 @@ namespace ElasticCassandraExample.Dal.Repositories
                     )
                 )
                 .Sort(sort => sort
-                    .Ascending(f => f.DateTimePassage))
+                    .Descending(f => f.DateTimePassage))
                 .Size(50)
                 .Scroll("24h"));
 
-            return result;
+            if (!response.IsValid)
+            {
+                throw new Exception("Falha ao realizar a pesquisa: " + response.DebugInformation);
+
+            }
+
+            return response;
 
         }
 
